@@ -9,19 +9,26 @@ function! operator#fill#strfill(src, char) abort
   return join(builder, "\n")
 endfunction
 
+function! s:getchar() abort
+  let result = getchar()
+  let result = (type(result) == type(0))? nr2char(result): result
+  if result == "\<C-[>"
+    return 0
+  endif
+  return result
+endfunction
+
 function! s:fill_block(motion_wise) abort
-  let char = getchar()
-  let char = (type(char) == type(0))? nr2char(char): char
-  if char == "\<C-[>"
-    return a:src
+  let char = s:getchar()
+  if type(char) == type(0) && ! char
+    return
   endif
   execute "normal! `[\<C-v>`]r" . char
 endfunction
 
 function! s:fill_range(motion_wise) abort
-  let char = getchar()
-  let char = (type(char) == type(0))? nr2char(char): char
-  if char == "\<C-[>"
+  let char = s:getchar()
+  if type(char) == type(0) && ! char
     return a:src
   endif
   let v = operator#user#visual_command_from_wise_name(a:motion_wise)
