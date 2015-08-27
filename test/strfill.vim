@@ -5,15 +5,15 @@ function! s:suite.test_strfill_oneline()
   for test in [
   \   {
   \     'src': 'abc', 'char': 'a',
-  \     'dst': 'aaa'
+  \     'dst': 'aaa',
   \   },
   \   {
   \     'src': ' 12345 ', 'char': 'a',
-  \     'dst': 'aaaaaaa'
+  \     'dst': 'aaaaaaa',
   \   },
   \   {
   \     'src': 'foo bar baz', 'char': 'a',
-  \     'dst': 'aaaaaaaaaaa'
+  \     'dst': 'aaaaaaaaaaa',
   \   },
   \ ]
     let expect = test.dst
@@ -26,11 +26,11 @@ function! s:suite.test_strfill_specialwidth()
   for test in [
   \   {
   \     'src': 'あいう', 'char': 'b',
-  \     'dst': 'bbbbbb'
+  \     'dst': 'bbbbbb',
   \   },
   \   {
   \     'src': '', 'char': 'a',
-  \     'dst': 'aaaa'
+  \     'dst': 'aaaa',
   \   },
   \ ]
     let expect = test.dst
@@ -43,15 +43,15 @@ function! s:suite.test_strfill_multiline()
   for test in [
   \   {
   \     'src': join(['ab', 'dcef'], "\n"), 'char': 'c',
-  \     'dst': join(['cc', 'cccc'], "\n")
+  \     'dst': join(['cc', 'cccc'], "\n"),
   \   },
   \   {
   \     'src': join(['foo', 'bar', 'baz'], "\n"), 'char': 'c',
-  \     'dst': join(['ccc', 'ccc', 'ccc'], "\n")
+  \     'dst': join(['ccc', 'ccc', 'ccc'], "\n"),
   \   },
   \   {
   \     'src': join(['あいうえ', '', 'ab'], "\n"), 'char': 'c',
-  \     'dst': join(['cccccccc', 'cccc', 'cc'], "\n")
+  \     'dst': join(['cccccccc', 'cccc', 'cc'], "\n"),
   \   },
   \ ]
     let expect = test.dst
