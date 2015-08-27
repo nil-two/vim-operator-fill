@@ -59,3 +59,48 @@ function! s:suite.test_strfill_multiline()
     call s:assert.equals(actual, expect)
   endfor
 endfunction
+
+function! s:suite.test_strfill_emptyline()
+  for test in [
+  \   {
+  \     'src': "", 'char': 'd',
+  \     'dst': "",
+  \   },
+  \   {
+  \     'src': "\n", 'char': 'd',
+  \     'dst': "\n",
+  \   },
+  \   {
+  \     'src': "\n\n\n", 'char': 'd',
+  \     'dst': "\n\n\n",
+  \   },
+  \   {
+  \     'src': "\nab", 'char': 'd',
+  \     'dst': "\ndd",
+  \   },
+  \   {
+  \     'src': "\n\nabc", 'char': 'd',
+  \     'dst': "\n\nddd",
+  \   },
+  \   {
+  \     'src': "foo\nbar", 'char': 'd',
+  \     'dst': "ddd\nddd",
+  \   },
+  \   {
+  \     'src': "foobar\n\nfoobar", 'char': 'd',
+  \     'dst': "dddddd\n\ndddddd",
+  \   },
+  \   {
+  \     'src': "abcde\n", 'char': 'c',
+  \     'dst': "ccccc\n",
+  \   },
+  \   {
+  \     'src': "abcdeghi\n\n", 'char': 'c',
+  \     'dst': "cccccccc\n\n",
+  \   },
+  \ ]
+    let expect = test.dst
+    let actual = operator#fill#strfill(test.src, test.char)
+    call s:assert.equals(actual, expect)
+  endfor
+endfunction
