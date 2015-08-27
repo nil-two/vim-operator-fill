@@ -33,11 +33,13 @@ endfunction
 
 let s:dotinfo = {
 \   'is_repeating': 0,
+\   'was_eol': 0,
 \   'char': '',
 \ }
 
 function! operator#fill#initialize_dotinfo()
   let s:dotinfo.is_repeating = 0
+  let s:dotinfo.was_eol = getcurpos()[4] == 2147483647
 endfunction
 
 function! operator#fill#fill(motion_wise) abort
@@ -51,7 +53,9 @@ function! operator#fill#fill(motion_wise) abort
   endif
 
   let pos = getcurpos()
-  let pos[4] = (pos[4] == 2147483647)? pos[2]: pos[4]
+  if !s:dotinfo.is_repeating && !s:dotinfo.was_eol
+    let pos[4] = pos[2]
+  endif
   silent call s:fill(a:motion_wise, char)
   call setpos('.', pos)
 
