@@ -2,17 +2,11 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! operator#fill#strfill(src, char) abort
-  if a:src =~ "^\n*$"
-    return a:src
-  endif
-
-  let head = matchstr(a:src, "^\n*")
-  let tail = matchstr(a:src, "\n$")
-  let builder = split(a:src, '\n')
+  let builder = split(a:src, "\n", 1)
   for i in range(len(builder))
     let builder[i] = repeat(a:char, strdisplaywidth(builder[i]))
   endfor
-  return head . join(builder, "\n") . tail
+  return join(builder, "\n")
 endfunction
 
 let s:operator = {
