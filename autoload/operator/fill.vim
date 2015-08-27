@@ -33,6 +33,10 @@ function! s:fill(src) abort
   return join(builder, "\n")
 endfunction
 
+function! s:fill_range(motion_wise) abort
+  silent call s:rewrite_textobj_by(a:motion_wise, 's:fill')
+endfunction
+
 function! s:fill_block(motion_wise) abort
   let char = getchar()
   let char = (type(char) == type(0))? nr2char(char): char
@@ -46,7 +50,7 @@ function! operator#fill#fill(motion_wise) abort
   if a:motion_wise == 'block'
     silent call s:fill_block(a:motion_wise)
   else
-    silent call s:rewrite_textobj_by(a:motion_wise, 's:fill')
+    silent call s:fill_range(a:motion_wise)
   endif
 endfunction
 
