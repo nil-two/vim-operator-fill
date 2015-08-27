@@ -9,15 +9,6 @@ function! operator#fill#strfill(src, char) abort
   return join(builder, "\n")
 endfunction
 
-let s:dotinfo = {
-\   'is_repeating': 0,
-\   'char': '',
-\ }
-
-function! operator#fill#initialize_dotinfo()
-  let s:dotinfo.is_repeating = 0
-endfunction
-
 function! s:fill_block(motion_wise, char) abort
   execute "normal! `[\<C-v>`]r" . a:char
 endfunction
@@ -38,6 +29,15 @@ function! s:fill_range(motion_wise, char) abort
     let &l:selection = sel_save
     call setreg('z', reg_save, regtype_save)
   endtry
+endfunction
+
+let s:dotinfo = {
+\   'is_repeating': 0,
+\   'char': '',
+\ }
+
+function! operator#fill#initialize_dotinfo()
+  let s:dotinfo.is_repeating = 0
 endfunction
 
 function! operator#fill#fill(motion_wise) abort
