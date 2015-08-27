@@ -1,0 +1,40 @@
+*operator-fill.txt*	Fill a text object with a {char}
+
+Version: 0.1.0
+Author : kusabashira <kusabashira227@gmail.com>
+License: MIT License
+
+==============================================================================
+CONTENTS					*operator-fill-contents*
+
+INTRODUCTION			|operator-fill-introduction|
+INTERFACE			|operator-fill-interface|
+  KEY MAPPINGS			  |operator-fill-key-mappings|
+
+
+==============================================================================
+INTRODUCTION					*operator-fill-introduction*
+
+*vim-operator-fill* is a Vim plugin to provide an operator
+to fill a text object with a {char}.
+
+Requirements:
+- |operator-user|     https://github.com/kana/vim-operator-user
+
+Latest version:
+https://github.com/kusabashira/vim-operator-fill
+
+
+==============================================================================
+INTERFACE					*operator-fill-interface*
+
+------------------------------------------------------------------------------
+KEY MAPPINGS					*operator-fill-key-mappings*
+
+<Plug>(operator-fill)				*<Plug>(operator-fill-perl)*
+			Fill a text object with a {char}.
+			After you specify text object, you must input {char}.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
