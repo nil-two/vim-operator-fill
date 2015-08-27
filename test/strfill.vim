@@ -38,3 +38,24 @@ function! s:suite.test_strfill_specialwidth()
     call s:assert.equals(actual, expect)
   endfor
 endfunction
+
+function! s:suite.test_strfill_multiline()
+  for test in [
+  \   {
+  \     'src': join(['ab', 'dcef'], "\n"), 'char': 'c',
+  \     'dst': join(['cc', 'cccc'], "\n")
+  \   },
+  \   {
+  \     'src': join(['foo', 'bar', 'baz'], "\n"), 'char': 'c',
+  \     'dst': join(['ccc', 'ccc', 'ccc'], "\n")
+  \   },
+  \   {
+  \     'src': join(['あいうえ', '', 'ab'], "\n"), 'char': 'c',
+  \     'dst': join(['cccccccc', 'cccc', 'cc'], "\n")
+  \   },
+  \ ]
+    let expect = test.dst
+    let actual = operator#fill#strfill(test.src, test.char)
+    call s:assert.equals(actual, expect)
+  endfor
+endfunction
