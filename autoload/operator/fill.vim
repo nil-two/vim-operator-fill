@@ -50,11 +50,14 @@ function! operator#fill#fill(motion_wise) abort
     endif
   endif
 
+  let pos = getcurpos()
+  let pos[4] = (pos[4] == 2147483647)? pos[2]: pos[4]
   if a:motion_wise == 'block'
     silent call s:fill_block(a:motion_wise, char)
   else
     silent call s:fill_range(a:motion_wise, char)
   endif
+  call setpos('.', pos)
 
   let s:dotinfo.is_repeating = 1
   let s:dotinfo.char = char
