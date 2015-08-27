@@ -20,5 +20,19 @@ function! s:rewrite_textobj_by(motion_wise, func_name) abort
   endtry
 endfunction
 
+function! s:fill(src) abort
+  let char = getchar()
+  let char = (type(char) == type(0))? nr2char(char): char
+  let builder = split(a:src, '\n')
+  for i in range(len(builder))
+    let builder[i] = repeat(char, strdisplaywidth(builder[i]))
+  endfor
+  return join(builder, "\n")
+endfunction
+
+function! operator#fill#fill(motion_wise) abort
+  silent call s:rewrite_textobj_by(a:motion_wise, 's:fill')
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
