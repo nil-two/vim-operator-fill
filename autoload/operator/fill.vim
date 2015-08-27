@@ -38,18 +38,18 @@ function! s:fill(motion_wise, char) abort
   endif
 endfunction
 
-let s:dotinfo = {
+let s:operator = {
 \   'is_repeating': 0,
 \   'char': '',
 \ }
 
 function! operator#fill#initialize_dotinfo() abort
-  let s:dotinfo.is_repeating = 0
+  let s:operator.is_repeating = 0
 endfunction
 
 function! operator#fill#fill(motion_wise) abort
-  let char = s:dotinfo.char
-  if !s:dotinfo.is_repeating
+  let char = s:operator.char
+  if !s:operator.is_repeating
     let char = getchar()
     let char = (type(char) == type(0))? nr2char(char): char
     if char == "\<C-[>"
@@ -58,9 +58,8 @@ function! operator#fill#fill(motion_wise) abort
   endif
 
   silent call s:fill(a:motion_wise, char)
-
-  let s:dotinfo.is_repeating = 1
-  let s:dotinfo.char = char
+  let s:operator.is_repeating = 1
+  let s:operator.char = char
 endfunction
 
 let &cpo = s:save_cpo
