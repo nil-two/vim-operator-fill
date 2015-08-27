@@ -33,8 +33,21 @@ function! s:fill(src) abort
   return join(builder, "\n")
 endfunction
 
+function! s:fill_block(motion_wise) abort
+  let char = getchar()
+  let char = (type(char) == type(0))? nr2char(char): char
+  if char == "\<C-[>"
+    return a:src
+  endif
+  execute "normal! `[\<C-v>`]r" . char
+endfunction
+
 function! operator#fill#fill(motion_wise) abort
-  silent call s:rewrite_textobj_by(a:motion_wise, 's:fill')
+  if a:motion_wise == 'block'
+    silent call s:fill_block(a:motion_wise)
+  else
+    silent call s:rewrite_textobj_by(a:motion_wise, 's:fill')
+  endif
 endfunction
 
 let &cpo = s:save_cpo
