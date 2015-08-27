@@ -23,6 +23,9 @@ endfunction
 function! s:fill(src) abort
   let char = getchar()
   let char = (type(char) == type(0))? nr2char(char): char
+  if char == "\<C-[>"
+    return a:src
+  endif
   let builder = split(a:src, '\n')
   for i in range(len(builder))
     let builder[i] = repeat(char, strdisplaywidth(builder[i]))
