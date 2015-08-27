@@ -21,3 +21,20 @@ function! s:suite.test_strfill_oneline()
     call s:assert.equals(actual, expect)
   endfor
 endfunction
+
+function! s:suite.test_strfill_specialwidth()
+  for test in [
+  \   {
+  \     'src': 'あいう', 'char': 'b',
+  \     'dst': 'bbbbbb'
+  \   },
+  \   {
+  \     'src': '', 'char': 'a',
+  \     'dst': 'aaaa'
+  \   },
+  \ ]
+    let expect = test.dst
+    let actual = operator#fill#strfill(test.src, test.char)
+    call s:assert.equals(actual, expect)
+  endfor
+endfunction
