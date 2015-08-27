@@ -42,16 +42,16 @@ endfunction
 function! s:suite.test_strfill_multiline()
   for test in [
   \   {
-  \     'src': join(['ab', 'dcef'], "\n"), 'char': 'c',
-  \     'dst': join(['cc', 'cccc'], "\n"),
+  \     'src': "abd\ncef", 'char': 'c',
+  \     'dst': "ccc\nccc",
   \   },
   \   {
-  \     'src': join(['foo', 'bar', 'baz'], "\n"), 'char': 'c',
-  \     'dst': join(['ccc', 'ccc', 'ccc'], "\n"),
+  \     'src': "foo\nbar\nbaz", 'char': 'c',
+  \     'dst': "ccc\nccc\nccc",
   \   },
   \   {
-  \     'src': join(['あいうえ', '', 'ab'], "\n"), 'char': 'c',
-  \     'dst': join(['cccccccc', 'cccc', 'cc'], "\n"),
+  \     'src': "あいうえ\n\nab", 'char': 'c',
+  \     'dst': "cccccccc\ncccc\ncc",
   \   },
   \ ]
     let expect = test.dst
