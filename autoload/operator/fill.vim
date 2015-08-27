@@ -1,6 +1,15 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+function! s:fill_block(motion_wise) abort
+  let char = getchar()
+  let char = (type(char) == type(0))? nr2char(char): char
+  if char == "\<C-[>"
+    return a:src
+  endif
+  execute "normal! `[\<C-v>`]r" . char
+endfunction
+
 function! s:fill_range(motion_wise) abort
   let char = getchar()
   let char = (type(char) == type(0))? nr2char(char): char
@@ -26,15 +35,6 @@ function! s:fill_range(motion_wise) abort
     let &l:selection = sel_save
     call setreg('z', reg_save, regtype_save)
   endtry
-endfunction
-
-function! s:fill_block(motion_wise) abort
-  let char = getchar()
-  let char = (type(char) == type(0))? nr2char(char): char
-  if char == "\<C-[>"
-    return a:src
-  endif
-  execute "normal! `[\<C-v>`]r" . char
 endfunction
 
 function! operator#fill#fill(motion_wise) abort
