@@ -18,30 +18,11 @@ function! operator#fill#initialize_dotinfo()
   let s:dotinfo.is_repeating = 0
 endfunction
 
-function! s:getchar() abort
-  let result = getchar()
-  let result = (type(result) == type(0))? nr2char(result): result
-  if result == "\<C-[>"
-    return 0
-  endif
-  return result
+function! s:fill_block(motion_wise, char) abort
+  execute "normal! `[\<C-v>`]r" . a:char
 endfunction
 
-function! s:fill_block(motion_wise) abort
-  let char = s:dotinfo.is_repeating ? s:dotinfo.char : s:getchar()
-  if type(char) == type(0) && ! char
-    return
-  endif
-  let s:dotinfo.is_repeating = 1
-  let s:dotinfo.char = char
-  execute "normal! `[\<C-v>`]r" . char
-endfunction
-
-function! s:fill_range(motion_wise) abort
-  let char = s:dotinfo.is_repeating ? s:dotinfo.char : s:getchar()
-  if type(char) == type(0) && ! char
-    return
-  endif
+function! s:fill_range(motion_wise, char) abort
   let v = operator#user#visual_command_from_wise_name(a:motion_wise)
   try
     let sel_save     = &l:selection
@@ -50,23 +31,33 @@ function! s:fill_range(motion_wise) abort
     let regtype_save = getregtype('z')
     execute 'normal!' '`[' . v . '`]"zy'
     let src = getreg('z')
-    let dst = operator#fill#strfill(src, char)
+    let dst = operator#fill#strfill(src, a:char)
     call setreg('z', dst)
     execute 'normal!' '`[' . v . '`]"zp'
   finally
     let &l:selection = sel_save
     call setreg('z', reg_save, regtype_save)
-    let s:dotinfo.is_repeating = 1
-    let s:dotinfo.char = char
   endtry
 endfunction
 
 function! operator#fill#fill(motion_wise) abort
-  if a:motion_wise == 'block'
-    silent call s:fill_block(a:motion_wise)
-  else
-    silent call s:fill_range(a:motion_wise)
+  let char = s:dotinfo.char
+  if !s:dotinfo.is_repeating
+    let char = getchar()
+    let char = (type(char) == type(0))? nr2char(char): char
+    if char == "\<C-[>"
+      return
+    endif
   endif
+
+  if a:motion_wise == 'block'
+    silent call s:fill_block(a:motion_wise, char)
+  else
+    silent call s:fill_range(a:motion_wise, char)
+  endif
+
+  let s:dotinfo.is_repeating = 1
+  let s:dotinfo.char = char
 endfunction
 
 let &cpo = s:save_cpo
