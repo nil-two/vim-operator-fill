@@ -6,7 +6,7 @@ function! operator#fill#strfill(src, char) abort
     return a:src
   endif
 
-  let head = matchstr(a:src, "\n*")
+  let head = matchstr(a:src, "^\n*")
   let tail = matchstr(a:src, "\n$")
   let builder = split(a:src, '\n')
   for i in range(len(builder))
