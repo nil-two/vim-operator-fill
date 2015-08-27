@@ -43,23 +43,25 @@ let s:operator = {
 \   'char': '',
 \ }
 
-function! operator#fill#initialize_dotinfo() abort
-  let s:operator.is_repeating = 0
-endfunction
-
-function! operator#fill#fill(motion_wise) abort
-  let char = s:operator.char
+function! s:operator.setchar() abort
   if !s:operator.is_repeating
     let char = getchar()
     let char = (type(char) == type(0))? nr2char(char): char
     if char == "\<C-[>"
       return
     endif
+    let s:operator.is_repeating = 1
+    let s:operator.char = char
   endif
+endfunction
 
-  silent call s:fill(a:motion_wise, char)
-  let s:operator.is_repeating = 1
-  let s:operator.char = char
+function! operator#fill#initialize_dotinfo() abort
+  let s:operator.is_repeating = 0
+endfunction
+
+function! operator#fill#fill(motion_wise) abort
+  silent call s:operator.setchar()
+  silent call s:fill(a:motion_wise, s:operator.char)
 endfunction
 
 let &cpo = s:save_cpo
