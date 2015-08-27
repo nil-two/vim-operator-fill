@@ -1,6 +1,14 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+function! operator#fill#strfill(src, char) abort
+  let builder = split(a:src, '\n')
+  for i in range(len(builder))
+    let builder[i] = repeat(a:char, strdisplaywidth(builder[i]))
+  endfor
+  return join(builder, "\n")
+endfunction
+
 function! s:fill_block(motion_wise) abort
   let char = getchar()
   let char = (type(char) == type(0))? nr2char(char): char
@@ -24,11 +32,7 @@ function! s:fill_range(motion_wise) abort
     let regtype_save = getregtype('z')
     execute 'normal!' '`[' . v . '`]"zy'
     let src = getreg('z')
-    let builder = split(src, '\n')
-    for i in range(len(builder))
-      let builder[i] = repeat(char, strdisplaywidth(builder[i]))
-    endfor
-    let dst = join(builder, "\n")
+    let dst = operator#fill#strfill(src, char)
     call setreg('z', dst)
     execute 'normal!' '`[' . v . '`]"zp'
   finally
