@@ -49,7 +49,7 @@ function! s:operator.fill(motion_wise) abort
   endif
 endfunction
 
-function! operator#fill#initialize_dotinfo() abort
+function! operator#fill#initialize() abort
   let s:operator.is_repeating = 0
 endfunction
 
