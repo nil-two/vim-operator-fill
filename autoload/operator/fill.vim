@@ -17,12 +17,8 @@ let s:operator = {
 function! s:operator.setchar() abort
   if !s:operator.is_repeating
     let char = getchar()
-    let char = (type(char) == type(0))? nr2char(char): char
-    if char == "\<C-[>"
-      return
-    endif
+    let s:operator.char = (type(char) == type(0))? nr2char(char): char
     let s:operator.is_repeating = 1
-    let s:operator.char = char
   endif
 endfunction
 
@@ -55,6 +51,9 @@ endfunction
 
 function! operator#fill#fill(motion_wise) abort
   silent call s:operator.setchar()
+  if s:operator.char == "\<C-[>"
+    return
+  endif
   silent call s:operator.fill(a:motion_wise)
 endfunction
 
