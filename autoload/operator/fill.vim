@@ -40,8 +40,8 @@ function! s:operator.fill(motion_wise) abort
       let src = getreg('z')
       let dst = operator#fill#strfill(src, s:operator.char)
       call setreg('z', dst)
-      execute 'normal!' '`[' . v . '`]"zp'
-      execute 'normal!' '`['
+      execute 'normal! `[' . v . '`]"zp'
+      execute 'normal! `['
     finally
       let &l:selection = sel_save
       call setreg('z', reg_save, regtype_save)
