@@ -3,6 +3,14 @@ vim-operator-fill
 
 Fill a text object with a {char}.
 
+```
+" from
+vim-operator-fill
+
+" to
+xxxxxxxxxxxxxxxxx
+```
+
 Requirements
 ------------
 
