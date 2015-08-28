@@ -22,6 +22,10 @@ function! s:operator.setchar() abort
   endif
 endfunction
 
+function! s:operator.canceled() abort
+  return s:operator.char == "\<C-[>"
+endfunction
+
 function! s:operator.fill(motion_wise) abort
   if a:motion_wise == 'block'
     execute "normal! `[\<C-v>`]r" . s:operator.char
@@ -51,7 +55,7 @@ endfunction
 
 function! operator#fill#fill(motion_wise) abort
   silent call s:operator.setchar()
-  if s:operator.char == "\<C-[>"
+  if s:operator.canceled()
     return
   endif
   silent call s:operator.fill(a:motion_wise)
