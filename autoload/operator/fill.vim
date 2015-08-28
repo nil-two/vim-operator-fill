@@ -15,20 +15,20 @@ let s:operator = {
 \ }
 
 function! s:operator.setchar() abort
-  if !s:operator.is_repeating
+  if !self.is_repeating
     let char = getchar()
-    let s:operator.char = (type(char) == type(0))? nr2char(char): char
-    let s:operator.is_repeating = 1
+    let self.char = (type(char) == type(0))? nr2char(char): char
+    let self.is_repeating = 1
   endif
 endfunction
 
 function! s:operator.canceled() abort
-  return s:operator.char == "\<C-[>"
+  return self.char == "\<C-[>"
 endfunction
 
 function! s:operator.fill(motion_wise) abort
   if a:motion_wise == 'block'
-    execute "normal! `[\<C-v>`]r" . s:operator.char
+    execute "normal! `[\<C-v>`]r" . self.char
   else
     let v = operator#user#visual_command_from_wise_name(a:motion_wise)
     try
@@ -38,7 +38,7 @@ function! s:operator.fill(motion_wise) abort
       let regtype_save = getregtype('z')
       execute 'normal!' '`[' . v . '`]"zy'
       let src = getreg('z')
-      let dst = operator#fill#strfill(src, s:operator.char)
+      let dst = operator#fill#strfill(src, self.char)
       call setreg('z', dst)
       execute 'normal! `[' . v . '`]"zp'
       execute 'normal! `['
