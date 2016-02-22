@@ -31,7 +31,7 @@ INTERFACE					*operator-fill-interface*
 ------------------------------------------------------------------------------
 KEY MAPPINGS					*operator-fill-key-mappings*
 
-<Plug>(operator-fill)				*<Plug>(operator-fill-perl)*
+<Plug>(operator-fill)				*<Plug>(operator-fill)*
 			Fill a text object with a {char}.
 			After you specify text object, you must input {char}.
 
