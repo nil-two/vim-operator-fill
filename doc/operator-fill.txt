@@ -15,7 +15,7 @@ INTERFACE			|operator-fill-interface|
 ==============================================================================
 INTRODUCTION					*operator-fill-introduction*
 
-*vim-operator-fill* is a Vim plugin to provide an operator
+*operator-fill* is a Vim plugin to provide an operator
 to fill a text object with a {char}.
 
 Requirements:
